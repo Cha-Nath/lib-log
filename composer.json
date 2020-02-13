@@ -13,7 +13,7 @@
     ],
     "autoload": {
         "psr-4": {
-            "nlib\\log\\": ""
+            "nlib\\Log\\": ""
         }
     },
     "minimum-stability": "dev",

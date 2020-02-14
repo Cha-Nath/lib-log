@@ -10,12 +10,12 @@ interface LogTraitInterface {
      * @param string $file
      * @return void
      */
-    public function log(array $values, string $file = 'log_') : void;
+    public function log(array $values, string $file = 'log_');
 
     /**
      *
      * @param string $file
      * @return void
      */
-    public function endlog(string $file = 'log_') : void;
+    public function endlog(string $file = 'log_');
 }

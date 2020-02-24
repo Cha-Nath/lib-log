@@ -6,7 +6,7 @@ use nlib\Path\Classes\Path;
 
 trait LogTrait {
 
-    public function log(array $values, string $file = 'log_') {
+    public function log(array $values, string $file = 'log_') : string {
         
         if(empty($log = Path::i()->getLog())) die('Log cannot be empty');
         if(empty(is_dir($log))) mkdir($log, 0777);
@@ -23,7 +23,11 @@ trait LogTrait {
         else : $string = '[' . $date . '] [Log] Empty log values.' . PHP_EOL; endif;
 
         file_put_contents($log, $string, FILE_APPEND);
+
+        return $string;
     }
 
     public function endlog(string $file = 'log_') { $this->log(["\n"], $file); }
+
+    public function dlog(array $values, string $file = 'log_') { $message = $this->log($values, $file); die($message); }
 }

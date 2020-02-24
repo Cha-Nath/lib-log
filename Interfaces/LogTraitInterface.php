@@ -8,9 +8,9 @@ interface LogTraitInterface {
      *
      * @param array $values
      * @param string $file
-     * @return void
+     * @return string
      */
-    public function log(array $values, string $file = 'log_');
+    public function log(array $values, string $file = 'log_') : string;
 
     /**
      *
@@ -18,4 +18,12 @@ interface LogTraitInterface {
      * @return void
      */
     public function endlog(string $file = 'log_');
+
+    /**
+     *
+     * @param array $values
+     * @param string $file
+     * @return void
+     */
+    public function dlog(array $values, string $file = 'log_');
 }

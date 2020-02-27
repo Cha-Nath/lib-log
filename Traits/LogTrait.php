@@ -19,7 +19,7 @@ trait LogTrait {
         $date = date('Y-m-d H:i:s');
         if(!empty($values)) :
             if(reset($values) === "\n") $string = "\n";
-            else foreach($values as $key => $value) $string .= '[' . $date . '] [' . $key . '] ' . $value . PHP_EOL;
+            else foreach($values as $key => $value) $string .= '[' . $date . '] [' . $key . '] ' . (is_array($value) ? json_encode($value) : $value) . PHP_EOL;
         else : $string = '[' . $date . '] [Log] Empty log values.' . PHP_EOL; endif;
 
         file_put_contents($log, $string, FILE_APPEND);

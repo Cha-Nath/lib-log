@@ -29,5 +29,17 @@ trait LogTrait {
 
     public function endlog(string $file = 'log_') { $this->log(["\n"], $file); }
 
-    public function dlog(array $values, string $file = 'log_') { $message = $this->log($values, $file); die($message); }
+    public function dlog(array $values, string $file = 'log_') : void {
+        $message = $this->log($values, $file);
+        $this->endlog($file);
+        die($message);
+    }
+
+    public function jlog(array $values, string $file = 'log') : void {
+        header('Content-type: application/json');
+        echo json_encode($values);
+        $this->log($values, $file);
+        $this->endlog($file);
+        die;
+    }
 }

@@ -27,7 +27,7 @@ trait LogTrait {
         return $string;
     }
 
-    public function endlog(string $file = 'log_') { $this->log(["\n"], $file); }
+    public function endlog(string $file = 'log_') : void { $this->log(["\n"], $file); }
 
     public function dlog(array $values, string $file = 'log_') : void {
         $message = $this->log($values, $file);

@@ -17,7 +17,7 @@ interface LogTraitInterface {
      * @param string $file
      * @return void
      */
-    public function endlog(string $file = 'log_') : void;
+    public function endlog(string $file = 'log_');
 
     /**
      * Log & die
@@ -26,7 +26,7 @@ interface LogTraitInterface {
      * @param string $file
      * @return void
      */
-    public function dlog(array $values, string $file = 'log_') : void;
+    public function dlog(array $values, string $file = 'log_');
 
     /**
      * echo JSON, log & die
@@ -35,5 +35,5 @@ interface LogTraitInterface {
      * @param string $file
      * @return void
      */
-    public function jlog(array $values, string $file = 'log') : void;
+    public function jlog(array $values, string $file = 'log');
 }

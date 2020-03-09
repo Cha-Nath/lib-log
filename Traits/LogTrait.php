@@ -35,7 +35,7 @@ trait LogTrait {
         die($message);
     }
 
-    public function jlog(array $values, string $file = 'log') : void {
+    public function jlog(array $values, string $file = 'log_') : void {
         header('Content-type: application/json');
         echo json_encode($values);
         $this->log($values, $file);

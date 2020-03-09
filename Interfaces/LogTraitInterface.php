@@ -35,5 +35,5 @@ interface LogTraitInterface {
      * @param string $file
      * @return void
      */
-    public function jlog(array $values, string $file = 'log') : void;
+    public function jlog(array $values, string $file = 'log_') : void;
 }

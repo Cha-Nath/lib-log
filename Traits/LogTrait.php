@@ -10,6 +10,8 @@ trait LogTrait {
         
         if(empty($log = Path::i()->getLog())) die('Log cannot be empty');
         if(empty(is_dir($log))) mkdir($log, 0777);
+
+        $this->clog();
         $log .= DIRECTORY_SEPARATOR . $file . date('Y-m-d') .'.log';
         
         date_default_timezone_set('Europe/Brussels');
@@ -41,5 +43,28 @@ trait LogTrait {
         $this->log($values, $file);
         $this->endlog($file);
         die;
+    }
+
+    public function clog() : void {
+
+        $excludes = ['.', '..', 'index.php'];
+
+        if(empty($log = Path::i()->getLog())) die('Log cannot be empty');
+
+        if($folder = opendir($log)) :
+
+            while(false !== ($file = readdir($folder))) :
+                
+                if(!in_array($file, $excludes)) :
+
+                    $time = explode('_', explode('.', $file)[0]);
+                    if(strtotime(end($time)) < time() - 7 * 24 * 3600) unlink($log . $file);
+
+                endif;
+            endwhile;
+
+            closedir($folder);
+
+        endif;
     }
 }

@@ -9,7 +9,7 @@ trait LogTrait {
     public function log(array $values, string $file = 'log_') : string {
         
         if(empty($log = Path::i()->getLog())) die('Log cannot be empty');
-        if(empty(is_dir($log))) mkdir($log, 0777);
+        // if(empty(is_dir($log))) mkdir($log, 0777);
 
         $this->clog();
         $log .= DIRECTORY_SEPARATOR . $file . date('Y-m-d') .'.log';

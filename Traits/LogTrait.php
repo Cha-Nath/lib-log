@@ -6,16 +6,11 @@ use nlib\Path\Classes\Path;
 
 trait LogTrait {
 
+    #region Public Method
+
     public function log(array $values, string $file = 'log_') : string {
         
-        if(empty($log = Path::i()->getLog())) die('Log cannot be empty');
-        // if(empty(is_dir($log))) mkdir($log, 0777);
-
-        $this->clog();
-        $log .= DIRECTORY_SEPARATOR . $file . date('Y-m-d') .'.log';
-        
-        date_default_timezone_set('Europe/Brussels');
-        
+        $log = $this->ilog($file);
         $string = '';
         
         $date = date('Y-m-d H:i:s');
@@ -27,6 +22,28 @@ trait LogTrait {
         file_put_contents($log, $string, FILE_APPEND);
 
         return $string;
+    }
+
+    public function vlog(...$parameters) : string {
+
+        $log = $this->ilog('vdlog_', 3);
+        $vardump = '';
+
+        ob_start();
+        echo "\n". date('Y-m-d H:i:s') . "\n";
+        var_dump($parameters);
+        echo  "\n";
+        $vardump = ob_get_clean();
+
+        file_put_contents($log, $vardump, FILE_APPEND);
+
+        return $vardump;
+    }
+
+    public function dvlog(...$parameters) : void {
+        $vardump = $this->vlog(...$parameters);
+        $this->endlog('vdlog_');
+        die($vardump);
     }
 
     public function endlog(string $file = 'log_') : void { $this->log(["\n"], $file); }
@@ -45,7 +62,7 @@ trait LogTrait {
         die;
     }
 
-    public function clog() : void {
+    public function clog(int $day = 7) : void {
 
         $excludes = ['.', '..', 'index.php'];
 
@@ -58,7 +75,7 @@ trait LogTrait {
                 if(!in_array($file, $excludes)) :
 
                     $time = explode('_', explode('.', $file)[0]);
-                    if(strtotime(end($time)) < time() - 7 * 24 * 3600) unlink($log . $file);
+                    if(strtotime(end($time)) < time() - $day * 24 * 3600) unlink($log . $file);
 
                 endif;
             endwhile;
@@ -67,4 +84,22 @@ trait LogTrait {
 
         endif;
     }
+
+    #endregion
+
+    #region Private Method
+
+    private function ilog(string $file, int $day = 7) : string {
+
+        if(empty($log = Path::i()->getLog())) die('Log cannot be empty');
+        date_default_timezone_set('Europe/Brussels');
+        // if(empty(is_dir($log))) mkdir($log, 0777);
+
+        $this->clog($day);
+        $log .= DIRECTORY_SEPARATOR . $file . date('Y-m-d') .'.log';
+
+        return $log;
+    }
+    
+    #endregion
 }

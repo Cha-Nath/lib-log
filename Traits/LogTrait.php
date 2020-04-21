@@ -64,7 +64,7 @@ trait LogTrait {
 
     public function clog(int $day = 7) : void {
 
-        $excludes = ['.', '..', 'index.php'];
+        $excludes = ['.', '..', 'index.php', '.gitkeep', '.gitignore'];
 
         if(empty($log = Path::i()->getLog())) die('Log cannot be empty');
 

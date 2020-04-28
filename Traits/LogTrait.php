@@ -17,7 +17,7 @@ trait LogTrait {
         if(!empty($values)) :
             if(reset($values) === "\n") $string = "\n";
             else foreach($values as $key => $value) $string .= '[' . $date . '] [' . $key . '] ' . (is_array($value) ? json_encode($value) : $value) . PHP_EOL;
-        else : $string = '[' . $date . '] [Log] Empty log values.' . PHP_EOL; endif;
+        else : $string = '[' . $date . '] [' . __CLASS__ . '::' . __FUNCTION__ .'] Empty log values.' . PHP_EOL; endif;
 
         file_put_contents($log, $string, FILE_APPEND);
 
@@ -66,7 +66,7 @@ trait LogTrait {
 
         $excludes = ['.', '..', 'index.php', '.gitkeep', '.gitignore'];
 
-        if(empty($log = Path::i()->getLog())) die('Log cannot be empty');
+        if(empty($log = Path::i()->getLog())) die('[' . __CLASS__ . '::' . __FUNCTION__ .'] Log cannot be empty');
 
         if($folder = opendir($log)) :
 
@@ -91,7 +91,7 @@ trait LogTrait {
 
     private function ilog(string $file, int $day = 7) : string {
 
-        if(empty($log = Path::i()->getLog())) die('Log cannot be empty');
+        if(empty($log = Path::i()->getLog())) die('[' . __CLASS__ . '::' . __FUNCTION__ .'] Log cannot be empty');
         date_default_timezone_set('Europe/Brussels');
         // if(empty(is_dir($log))) mkdir($log, 0777);
 

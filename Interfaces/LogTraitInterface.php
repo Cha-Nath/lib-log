@@ -36,4 +36,12 @@ interface LogTraitInterface {
      * @return void
      */
     public function jlog(array $values, string $file = 'log_') : void;
+
+    /**
+     * Remove data in log
+     *
+     * @param array $ignores
+     * @return self
+     */
+    public function setLogIgnores(array $ignores);
 }

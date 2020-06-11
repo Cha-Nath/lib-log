@@ -6,6 +6,8 @@ use nlib\Path\Classes\Path;
 
 trait LogTrait {
 
+    private $_logignores = [];
+
     #region Public Method
 
     public function log(array $values, string $file = 'log_') : string {
@@ -14,7 +16,7 @@ trait LogTrait {
         $string = '';
         
         $date = date('Y-m-d H:i:s');
-        if(!empty($values)) :
+        if(!empty($values = $this->rlog($values))) :
             if(reset($values) === "\n") $string = "\n";
             else foreach($values as $key => $value) $string .= '[' . $date . '] [' . $key . '] ' . (is_array($value) ? json_encode($value) : $value) . PHP_EOL;
         else : $string = '[' . $date . '] [' . __CLASS__ . '::' . __FUNCTION__ .'] Empty log values.' . PHP_EOL; endif;
@@ -87,6 +89,12 @@ trait LogTrait {
 
     #endregion
 
+    #region Setter
+    
+    public function setLogIgnores(array $ignores) : self { $this->_logignores = $ignores; return $this; }
+
+    #endregion
+
     #region Private Method
 
     private function ilog(string $file, int $day = 7) : string {
@@ -99,6 +107,16 @@ trait LogTrait {
         $log .= DIRECTORY_SEPARATOR . $file . date('Y-m-d') .'.log';
 
         return $log;
+    }
+
+    private function rlog(array $values) : array {
+        
+        if(!empty($ignores = $this->_logignores))
+            foreach($values as $key => $value)
+                foreach($ignores as $ignore)
+                    $values[$key] = str_replace($ignore, '', $value);
+
+        return $values;
     }
     
     #endregion

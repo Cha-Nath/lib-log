@@ -68,7 +68,7 @@ trait LogTrait {
 
         $excludes = ['.', '..', 'index.php', '.gitkeep', '.gitignore'];
 
-        if(empty($log = Path::i()->getLog())) die('[' . __CLASS__ . '::' . __FUNCTION__ .'] Log cannot be empty');
+        if(empty($log = $this->getLog())) die('[' . __CLASS__ . '::' . __FUNCTION__ .'] Log cannot be empty');
 
         if($folder = opendir($log)) :
 
@@ -89,6 +89,15 @@ trait LogTrait {
 
     #endregion
 
+    #region Getter
+
+    public function getLog() : string {
+        $i = (method_exists($this, $method = '_i')) ? $this->{$method}() : 'i';
+        return Path::i($i)->getLog();
+    }
+
+    #endregion
+
     #region Setter
     
     public function setLogIgnores(array $ignores) : self { $this->_logignores = $ignores; return $this; }
@@ -99,7 +108,7 @@ trait LogTrait {
 
     private function ilog(string $file, int $day = 7) : string {
 
-        if(empty($log = Path::i()->getLog())) die('[' . __CLASS__ . '::' . __FUNCTION__ .'] Log cannot be empty');
+        if(empty($log = $this->getLog())) die('[' . __CLASS__ . '::' . __FUNCTION__ .'] Log cannot be empty');
         date_default_timezone_set('Europe/Brussels');
         // if(empty(is_dir($log))) mkdir($log, 0777);
 

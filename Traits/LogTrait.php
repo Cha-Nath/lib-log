@@ -114,6 +114,7 @@ trait LogTrait {
 
         $this->clog($day);
         $log .= DIRECTORY_SEPARATOR . $file . date('Y-m-d') .'.log';
+        $log = str_replace(DIRECTORY_SEPARATOR . DIRECTORY_SEPARATOR, DIRECTORY_SEPARATOR, $log);
 
         return $log;
     }

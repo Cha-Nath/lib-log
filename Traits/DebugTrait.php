@@ -19,5 +19,7 @@ trait DebugTrait {
         endif;
     }
 
+    public function dd() : array { return [$this->_debug, $this->_die]; }
+
     public function setDebug(bool $debug, bool $die = false) : self { $this->_debug = $debug; $this->_die = $die; return $this; }
 }

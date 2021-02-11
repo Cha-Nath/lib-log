@@ -2,6 +2,7 @@
 
 namespace nlib\Log\Traits;
 
+use Exception;
 use nlib\Path\Classes\Path;
 
 trait LogTrait {
@@ -94,6 +95,13 @@ trait LogTrait {
     public function getLog() : string {
         $i = (method_exists($this, $method = '_i')) ? $this->{$method}() : 'i';
         return Path::i($i)->getLog();
+    }
+
+    public function l(string $offset = '1') : string {
+        return array_key_exists($offset, $traces = (new Exception())->getTrace())
+        && array_key_exists($c = 'class', $traces[$offset])
+        && array_key_exists($f = 'function', $traces[$offset]) ?
+            $traces[$offset][$c] . '::' . $traces[$offset][$f] : '';
     }
 
     #endregion

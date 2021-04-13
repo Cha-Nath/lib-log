@@ -65,11 +65,12 @@ trait LogTrait {
         die;
     }
 
-    public function clog(int $day = 7) : void {
-
-        $excludes = ['.', '..', 'index.php', '.gitkeep', '.gitignore'];
+    public function clog(?int $day = null) : void {
 
         if(empty($log = $this->getLog())) die('[' . __CLASS__ . '::' . __FUNCTION__ .'] Log cannot be empty');
+
+        if(empty($day)) $day = defined('LOG_LIFE_TIME') ? LOG_LIFE_TIME : 365;
+        $excludes = ['.', '..', 'index.php', '.gitkeep', '.gitignore'];
 
         if($folder = opendir($log)) :
 
@@ -114,7 +115,7 @@ trait LogTrait {
 
     #region Private Method
 
-    private function ilog(string $file, int $day = 7) : string {
+    private function ilog(string $file, ?int $day = null) : string {
 
         if(empty($log = $this->getLog())) die('[' . __CLASS__ . '::' . __FUNCTION__ .'] Log cannot be empty');
         date_default_timezone_set('Europe/Brussels');

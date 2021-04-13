@@ -14,13 +14,26 @@ interface LogTraitInterface {
 
     /**
      *
+     * @param [type] ...$parameters
+     * @return string
+     */
+    public function vlog(...$parameters) : string;
+
+    /**
+     *
+     * @param [type] ...$parameters
+     * @return void
+     */
+    public function dvlog(...$parameters) : void;
+
+    /**
+     *
      * @param string $file
      * @return void
      */
     public function endlog(string $file = 'log_') : void;
 
     /**
-     * Log & die
      *
      * @param array $values
      * @param string $file
@@ -29,7 +42,6 @@ interface LogTraitInterface {
     public function dlog(array $values, string $file = 'log_') : void;
 
     /**
-     * echo JSON, log & die
      *
      * @param array $values
      * @param string $file
@@ -38,10 +50,22 @@ interface LogTraitInterface {
     public function jlog(array $values, string $file = 'log_') : void;
 
     /**
-     * Remove data in log
      *
-     * @param array $ignores
-     * @return self
+     * @param integer|null $day
+     * @return void
      */
-    public function setLogIgnores(array $ignores);
+    public function clog(?int $day = null) : void;
+
+    /**
+     *
+     * @return string
+     */
+    public function getLog() : string;
+
+    /**
+     *
+     * @param string $offset
+     * @return string
+     */
+    public function l(string $offset = '1') : string;
 }
